@@ -1,23 +1,23 @@
 # HorariosAca — Django + MySQL
 
-Aplicación web para la gestión y generación de horarios académicos.
+Aplicación web para la gestión y generación de horarios académicos. El frontend y backend están integrados en un solo proyecto Django.
 
 ## Tecnologías
 
 | Capa | Tecnología |
 |------|-----------|
-| Frontend | HTML, CSS, JavaScript |
-| Backend | Python 3.14 + Django 6.0 |
-| Base de datos | MySQL 8.4 (Laragon) |
-| Servidor web | Apache (Laragon) |
+| Frontend | HTML, CSS, JavaScript (servido por Django) |
+| Backend | Python 3.12+ + Django 6.0 |
+| Base de datos | MySQL 8.4 |
+| Servidor web | Django (desarrollo) |
 
 ---
 
 ## Requisitos previos
 
-- [Laragon](https://laragon.org/download/) — incluye Apache y MySQL
 - [Python 3.12+](https://www.python.org/downloads/) — marcar **"Add python.exe to PATH"** al instalar
 - [Git](https://git-scm.com/downloads)
+- MySQL 8.4 — puede usarse [Laragon](https://laragon.org/download/) o cualquier instalación de MySQL
 
 ---
 
@@ -30,25 +30,17 @@ git clone https://github.com/DyowenDozh/HorariosAca-Django.git
 cd HorariosAca-Django
 ```
 
-### 2. Configurar el frontend
+### 2. Crear la base de datos
 
-Copiar la carpeta `frontend/HorariosAca` dentro de la carpeta `www` de Laragon:
-
-```
-C:\laragon\www\HorariosAca\
-```
-
-### 3. Crear la base de datos
-
-Iniciar Laragon y abrir [http://localhost/phpmyadmin](http://localhost/phpmyadmin) o usar DBeaver conectado a `localhost:3306`. Ejecutar:
+Conectarse a MySQL y ejecutar:
 
 ```sql
 CREATE DATABASE horariosaca CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 ```
 
-### 4. Configurar el backend
+### 3. Configurar el backend
 
-Navegar a la carpeta del backend:
+Navegar a la carpeta del proyecto:
 
 ```bash
 cd "backend/HorariosAca Python modulo registro/tallerexpress"
@@ -72,37 +64,46 @@ Instalar dependencias:
 pip install -r requirements.txt
 ```
 
-> Si `pip` no funciona, usar la ruta completa: `C:\Python314\python.exe -m pip install -r requirements.txt`
-
-Aplicar migraciones (crea las tablas en MySQL):
+Aplicar migraciones:
 
 ```bash
 python manage.py migrate
 ```
 
-### 5. Correr el servidor
+### 4. Correr el servidor
 
 ```bash
 python manage.py runserver
 ```
 
-El backend queda disponible en `http://localhost:8000`.
-
 ---
 
-## Cómo ejecutarlo cada vez
+## Uso
 
-1. Abrir **Laragon** → clic en **Start All** (Apache + MySQL)
-2. Abrir CMD y navegar al backend:
+1. Iniciar MySQL
+2. Correr el servidor Django:
    ```bash
-   cd "backend/HorariosAca Python modulo registro/tallerexpress"
-   .venv\Scripts\activate.bat
    python manage.py runserver
    ```
 3. Abrir en el navegador:
    ```
-   http://localhost/HorariosAca/login.html
+   http://localhost:8000/
    ```
+
+---
+
+## Páginas disponibles
+
+| URL | Descripción |
+|-----|-------------|
+| `http://localhost:8000/` | Página principal |
+| `http://localhost:8000/login/` | Iniciar sesión |
+| `http://localhost:8000/register/` | Registrarse |
+| `http://localhost:8000/dashboard/` | Panel de horarios |
+| `http://localhost:8000/settings/` | Configuración de cuenta |
+| `http://localhost:8000/plans/` | Planes de suscripción |
+| `http://localhost:8000/trash/` | Papelera |
+| `http://localhost:8000/terms/` | Términos y condiciones |
 
 ---
 
@@ -125,17 +126,23 @@ HorariosAca-Django/
 ├── backend/
 │   └── HorariosAca Python modulo registro/
 │       └── tallerexpress/
-│           ├── accounts/        # App de usuarios (modelos, vistas, URLs)
-│           ├── tallerexpress/   # Configuración Django (settings, urls)
+│           ├── accounts/           # App de usuarios (modelos, vistas, URLs)
+│           ├── tallerexpress/      # Configuración Django (settings, urls, views)
+│           ├── templates/          # Archivos HTML
+│           │   ├── index.html
+│           │   ├── login.html
+│           │   ├── register.html
+│           │   ├── dashboard.html
+│           │   ├── settings.html
+│           │   └── ...
+│           ├── static/             # Archivos CSS, JS e imágenes
+│           │   ├── style.css
+│           │   ├── dashboard.css
+│           │   ├── login.js
+│           │   ├── register.js
+│           │   └── ...
 │           ├── manage.py
 │           └── requirements.txt
-├── frontend/
-│   └── HorariosAca/             # HTML, CSS, JS
-│       ├── login.html
-│       ├── register.html
-│       ├── dashboard.html
-│       ├── settings.html
-│       └── ...
 ├── .gitignore
 └── README.md
 ```
